@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} OnePage</title>
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ url_for('static',path ='vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{url_for ('static' ,path ='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{url_for ('static' ,path ='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{url_for ('static' ,path ='vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{url_for ('static' ,path ='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{url_for ('static' ,path ='vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{url_for ('static' ,path ='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{url_for ('static' ,path ='css/style.css') }}" rel="stylesheet">
+
+    {% endblock %}
+</head>
+
+<body>
+    <!-- Header  -->
+    {% include 'include/header.html' %}
+    <!-- Page Content  -->
+    {% block page_content %}
+    {% endblock %}
+    
+    <!-- footer  -->
+    {% include 'include/footer.html' %}
+
+    {% block scripts %}
+    <!-- Vendor JS Files -->
+    <script src="{{ url_for ('static',path ='vendor/purecounter/purecounter.js') }}"></script>
+    <script src="{{ url_for ('static',path ='vendor/aos/aos.js') }}"></script>
+    <script src="{{ url_for ('static',path ='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for ('static',path ='vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ url_for ('static',path ='vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for ('static',path ='vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ url_for ('static',path ='vendor/php-email-form/validate.js') }}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ url_for ('static',path ='js/main.js') }}"></script>
+    {% endblock %}
+</body>
+
+</html>
