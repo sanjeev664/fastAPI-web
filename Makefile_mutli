@@ -1,0 +1,34 @@
+.DEFAULT_GOAL := br
+IMAGE_TAG := "coreact:api"
+CONTAINER_NAME := "coreact_api"
+PORT := 80
+
+.PHONY: br
+br: build run
+
+.PHONY: build
+build:
+	DOCKER_BUILDKIT=1 docker build --no-cache -t ${IMAGE_TAG} .
+
+.PHONY: interactive
+interactive:
+	docker run -it \
+		--name ${CONTAINER_NAME} \
+		-p ${PORT}:5000 \		
+		${IMAGE_TAG} \
+
+.PHONY: run
+run:
+	docker run --rm \
+		--name ${CONTAINER_NAME} \
+		-p ${PORT}:5000 \
+		--detach \
+		${IMAGE_TAG}
+
+.PHONY: stop
+stop:
+	docker container stop ${CONTAINER_NAME}
+
+.PHONY: rm
+rm:
+	docker image rm ${IMAGE_TAG}

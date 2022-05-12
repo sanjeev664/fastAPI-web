@@ -1,0 +1,82 @@
+# Settings --------------------------------------------------------------------
+# Please specify PYTHON_VERSION e.g. 3.9 and BASE_IMAGE_TYPE e.g. slim-buster
+# The image used as build image is python:PYTHON_VERSION.
+# --------------------------------------------------------------------- (BEGIN)
+ARG PYTHON_VERSION=3.9
+ARG BASE_IMAGE_TYPE=slim-buster
+FROM python:${PYTHON_VERSION} AS build-image
+FROM python:${PYTHON_VERSION}-${BASE_IMAGE_TYPE} AS base-image
+# ----------------------------------------------------------------------- (END)
+
+
+# STAGE: Model ----------------------------------------------------------------
+# In this stage we retrieve the model object (e.g. from AWS S3)
+# --------------------------------------------------------------------- (BEGIN)
+# FROM base-image AS model
+# WORKDIR /model
+# RUN truncate -s 256M model.pt
+# ----------------------------------------------------------------------- (END)
+
+
+# STAGE: Data -----------------------------------------------------------------
+# In this stage we retrieve the data (e.g. from AWS S3)
+# --------------------------------------------------------------------- (BEGIN)
+# FROM base-image AS data
+# WORKDIR /data
+# RUN truncate -s 512M df_users.csv.gz && \
+#     truncate -s 1024M df_wines.csv.gz
+# ----------------------------------------------------------------------- (END)
+
+
+# STAGE: Build ----------------------------------------------------------------
+# In this stage we build the foundation of the final image. We compile the
+# libraries needed for the app.
+# --------------------------------------------------------------------- (BEGIN)
+FROM build-image AS build
+RUN apt-get update && apt-get install -y --no-install-recommends tini=0.19.0-1
+COPY requirements.txt /requirements.txt
+RUN pip install --prefix=/install --no-cache-dir -r requirements.txt
+# ----------------------------------------------------------------------- (END)
+
+
+# STAGE: Source ---------------------------------------------------------------
+# In this stage we copy the compiled libraries from build stage and we copy in
+# the source files.
+# --------------------------------------------------------------------- (BEGIN)
+FROM base-image AS source
+WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+COPY --from=build /install /usr/local
+COPY --from=build /usr/bin/tini /usr/bin/tini
+COPY /app /app
+# ----------------------------------------------------------------------- (END)
+
+
+# STAGE: Test -----------------------------------------------------------------
+# In this stage we test our code. The pytest ENTRYPOINT assumes the test is
+# located in tests directory. You can pass any arguments to pytest in the CMD
+# when running the container.
+# --------------------------------------------------------------------- (BEGIN)
+# FROM source AS test
+# RUN pip install --no-cache-dir --no-warn-script-location  \
+#     pytest pytest-cov pytest-custom_exit_code
+# COPY ./tests* ./tests
+# ENTRYPOINT ["pytest"]
+# CMD ["--suppress-no-test-exit-code"]
+# ----------------------------------------------------------------------- (END)
+
+
+# STAGE: Production -----------------------------------------------------------
+# This stage is built upon the source stage. In this stage we launch the
+# FastAPI endpoints through uvicorn.
+# --------------------------------------------------------------------- (BEGIN)
+FROM source AS production
+RUN addgroup --system app && adduser --system --group app
+USER app
+EXPOSE 5000
+# COPY --from=model /model /app/model
+# COPY --from=data /data /app/data
+# ENTRYPOINT ["/usr/bin/tini", "--", "uvicorn", "app:app"]
+# CMD ["--host", "0.0.0.0", "--port", "5000"]
+# ----------------------------------------------------------------------- (END)
