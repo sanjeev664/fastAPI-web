@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} OnePage</title>
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="{{ url_for('static',path ='img/favicon.png') }}" rel="icon">
+    <link href="{{ url_for('static',path ='img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link
@@ -27,6 +27,8 @@
     <!-- Template Main CSS File -->
     <link href="{{url_for ('static' ,path ='css/style.css') }}" rel="stylesheet">
 
+
+
     {% endblock %}
 </head>
 
@@ -36,11 +38,16 @@
     <!-- Page Content  -->
     {% block page_content %}
     {% endblock %}
+    <!-- Portfolio details Content  -->
+    {% block portfolio_content %}
+    {% endblock %}
     
     <!-- footer  -->
     {% include 'include/footer.html' %}
 
     {% block scripts %}
+    <!-- Json Viewer -->
+   
     <!-- Vendor JS Files -->
     <script src="{{ url_for ('static',path ='vendor/purecounter/purecounter.js') }}"></script>
     <script src="{{ url_for ('static',path ='vendor/aos/aos.js') }}"></script>
