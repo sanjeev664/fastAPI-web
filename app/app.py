@@ -44,6 +44,33 @@ async def portfolio_details(request: Request):
     # data = openfile("portfolio.md")
     return templates.TemplateResponse("portfolio-details.html",  {"request": request})
 
+@app.get("/about", response_class=HTMLResponse)
+async def about(request: Request):
+    # data = openfile("portfolio.md")
+    return templates.TemplateResponse("about.html",  {"request": request})
+
+
+@app.get("/service", response_class=HTMLResponse)
+async def service(request: Request):
+    # data = openfile("portfolio.md")
+    return templates.TemplateResponse("service.html",  {"request": request})
+
+
+@app.get("/pricing", response_class=HTMLResponse)
+async def pricing(request: Request):
+    # data = openfile("portfolio.md")
+    return templates.TemplateResponse("pricing.html",  {"request": request})
+
+@app.get("/project", response_class=HTMLResponse)
+async def project(request: Request):
+    # data = openfile("portfolio.md")
+    return templates.TemplateResponse("project.html",  {"request": request})
+
+
+@app.get("/contact", response_class=HTMLResponse)
+async def contact(request: Request):
+    # data = openfile("portfolio.md")
+    return templates.TemplateResponse("contact.html",  {"request": request})
 
 
 @app.get("/predict", response_model=API_output)

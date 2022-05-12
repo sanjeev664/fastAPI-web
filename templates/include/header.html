@@ -2,11 +2,62 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">OnePage</a></h1>
+      
+      
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+    <nav class="navbar navbar-expand-lg navbar-dark trans-navigation fixed-top navbar-togglable">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <h3>Coreact</h3>
+            </a>
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
 
-      <nav id="navbar" class="navbar">
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <!-- Links -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="/" id="navbarWelcome"   aria-haspopup="true" aria-expanded="false">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="{{ url_for('about') }}" class="nav-link js-scroll-trigger">
+                            About
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="{{ url_for('service') }}" class="nav-link js-scroll-trigger">
+                            Services
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="{{ url_for('pricing') }}" class="nav-link js-scroll-trigger">
+                            Pricing
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="{{ url_for('project') }}" class="nav-link js-scroll-trigger">
+                            Demo
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a href="{{ url_for('contact') }}" class="nav-link">
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </div> <!-- / .navbar-collapse -->
+        </div> <!-- / .container -->
+    </nav> 
+     
+      <!--<nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
@@ -35,7 +86,7 @@
           <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+      </nav>--><!-- .navbar -->
 
     </div>
   </header><!-- End Header -->
